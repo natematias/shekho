@@ -12,8 +12,10 @@ class Session(models.Model):
     facilitator = models.ForeignKey(User, related_name="facilitator")
     status = models.CharField(max_length=20, choices = SESSION_STATUS,\
         default='unconfirmed')
-    #location = models.TextField(blank=True)
-    #time = models.DateTimeField(blank=True)
+    preferred_date = models.TextField()
+    expected_capacity = models.TextField()
+    rsvp_required = models.BooleanField()
+    has_cost = models.BooleanField()
     type = models.CharField(max_length=100)
     duration = models.CharField(max_length = 50)
     attendees = models.ManyToManyField(User, null=True, blank=True,\
