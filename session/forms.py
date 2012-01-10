@@ -6,6 +6,13 @@ from django.contrib.auth.models import User
 import shekho.session.models
 
 class SessionForm(ModelForm):
+   #from http://www.chicagodjango.com/blog/django-form-snippets/
+    def __init__(self, *args, **kwargs):
+        super(SessionForm, self).__init__(*args, **kwargs)
+        self.fields['rsvp_required'].required = False
+        self.fields['has_cost'].required = False
+        self.fields['preferred_date'].required = False
+
     class Meta:
         model = shekho.session.models.Session
 

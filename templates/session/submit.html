@@ -89,7 +89,7 @@
           <div class="clearfix">
           {% endif %}
 
-            <label for="id_type">Type</label>
+            <label for="id_type">Type <small><em>(required)</em></small></label>
             <div class="input">
               <input class="xlarge" id="id_type" name="type" size="30" type="text" placeholder="Type/format of your session">
               {% if form.type.errors %}
@@ -111,7 +111,7 @@
           <div class="clearfix">   
           {% endif %}
 
-            <label for="id_title">Title</label>
+            <label for="id_title">Title <small><em>(required)</em></small></label>
             <div class="input">
               <input class="xlarge" id="id_title" name="title" size="30" type="text" placeholder="Title of your proposed session">
               {% if form.title.errors %}
@@ -128,7 +128,7 @@
           <div class="clearfix">
           {% endif %}
    
-            <label for="id_description">Description</label>
+            <label for="id_description">Description <small><em>(required)</em></small></label>
             <div class="input">
               <textarea class="xxlarge" id="id_description" name="description" rows="5"></textarea>
               <span class="help-block">
@@ -147,7 +147,7 @@
           <div class="clearfix">
           {% endif %}
 
-            <label for="id_duration">Duration</label>
+            <label for="id_duration">Duration <small><em>(required)</em></small></label>
             <div class="input">
               <input class="xlarge" id="id_duration" name="duration" size="30" type="text" placeholder="Estimated duration of your session">
               {% if form.duration.errors %}
@@ -210,8 +210,7 @@
           {% endif %}
 
             <label for="id_preferred_date">Preferred Date</label>
-            <div class="input">              <input class="xlarge" id="id_preferred_date" name="preferred_date" size="30" type="text"
- placeholder="Preferred Date your session">
+            <div class="input">              <input class="xlarge" id="id_preferred_date" name="preferred_date" size="30" type="text" placeholder="Preferred Date your session">
               {% if form.preferred_date.errors %}
               <span class="help-block">
               {{form.preferred_date.errors}}
@@ -231,7 +230,7 @@
           <div class="clearfix">
           {% endif %}
 
-            <label for="id_expected_capacity">Expected Capacity</label>
+            <label for="id_expected_capacity">Expected Capacity <small><em>(required)</em></small></label>
             <div class="input">              <input class="xlarge" id="id_expected_capacity" name="expected_capacity" size="30" type="text"
  placeholder="Estimated capacity of your session">
               {% if form.expected_capacity.errors %}
@@ -252,7 +251,7 @@
           <div class="clearfix">
           {% endif %}
 
-            <label for="id_resource_space_needs">Resource and Space needs</label>
+            <label for="id_resource_space_needs">Resource and Space needs <small><em>(required)</em></small></label>
             <div class="input">              <input class="xlarge" id="id_resource_space_needs" name="resource_space_needs" size="30" type="text"
  placeholder="Estimated resource and space needs of your session">
               {% if form.resource_space_needs.errors %}
