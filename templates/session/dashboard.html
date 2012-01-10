@@ -32,6 +32,10 @@ function confirm(session_id) {
             <li><a href="/sessions/submit">Submit Session</a></li>
             <li><a href="/sessions/browse">Browse Sessions</a></li>
             <li><a href="http://festival-of-learning.media.mit.edu/">About</a></li>
+    {% if user.is_authenticated %}
+            <li><a href="/sessions/dashboard">My Sessions</a></li>
+    {% endif %}
+
 {% endblock %}
 
 {% block primary %}

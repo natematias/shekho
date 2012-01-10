@@ -7,6 +7,10 @@
             <li><a href="/sessions/submit">Submit Session</a></li>
             <li><a href="/sessions/browse">Browse Sessions</a></li>
             <li><a href="http://festival-of-learning.media.mit.edu/">About</a></li>
+    {% if user.is_authenticated %}
+            <li><a href="/sessions/dashboard">My Sessions</a></li>
+    {% endif %}
+
 {% endblock %}
 
 {% block banner %}
@@ -17,9 +21,18 @@
         <img src="/static/images/festival-of-learning.png" width="150" height="150">
         </div>
         <div class="span11">
-        <p>The Festival of Learning is a two-day festival on 27-28 January where anyone from E14 and E15 can teach, learn, and collaborate!
-        Formats include one-on-one tutorials, clinics, discussion circles, workshops, playdates, games, collaborative construction projects and more.</p>
-        <p><a href="/sessions/browse" class="btn primary large">Explore sessions ideas &raquo;</a></p>
+        <p>The Festival of Learning is a two-day festival on 27-28 January where anyone from E14 and E15 can teach, learn, and collaborate!</p>
+        <p>After you <a href="http://festival-of-learning.eventbrite.com/">register to attend</a>, use this website to <a href="sessions/submit">submit a session</a> or sign up for <a href="sessions/browse">existing sessions</a>. If you have any questions, contact us at <a href="mailto:festival-of-learning@media.mit.edu">festival-of-learning@media.mit.edu</a>.
+        </p>
+        <p></strong>Key Dates:</strong>
+        <ul>
+          <li><font color="red"><strong>Mon 16 Jan</strong>: <strong>Register to Attend by this date</font> (<a href="http://festival-of-learning.eventbrite.com">register here</a>) (this will just take a minute)</strong>
+          <li><strong>Thu 19 Jan</strong>: Sign up for <a href="/sessions/browse">specific RSVP sessions</a> by this date (hopefully, this takes more time)</li>
+          <li><strong>Mon 23 Jan</strong>: Festival Schedule published on this date, with space retained for open sessions</li>
+          <li><strong>Fri 27 Jan - 28 Jan</strong>: Festival of Learning</li>
+        </ul>
+        <p><a href="/sessions/browse" class="btn primary large">Explore session ideas &raquo;</a></p>
+        <p><a href="/sessions/submit" class="btn primary large">Submit a session idea &raquo;</a></p>
         </div>
         </div>
         </div>

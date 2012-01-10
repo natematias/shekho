@@ -25,6 +25,10 @@ function signup() {
             <li><a href="/sessions/submit">Submit Session</a></li>
             <li><a href="/sessions/browse">Browse Sessions</a></li>
             <li><a href="http://festival-of-learning.media.mit.edu/">About</a></li>
+    {% if user.is_authenticated %}
+            <li><a href="/sessions/dashboard">My Sessions</a></li>
+    {% endif %}
+
 {% endblock %}
 
 {% block banner %}
@@ -38,11 +42,19 @@ function signup() {
   <span class="label success">Confirmed</span>
   {% endif %}
   <h6>By {{ session.facilitator.first_name }} {{ session.facilitator.last_name }}</h6>
+
+{% autoescape off %}
+<p class="description">  {{ session.description }}<p>
+{% endautoescape %}
+
 <p><strong>Duration:</strong> {{session.duration}}</p>
 <p><strong>Type:</strong> {{session.type}}</p>
-{% autoescape off %}
-<p>  {{ session.description }}<p>
-{% endautoescape %}
+<p><strong>Preferred Time:</strong> {{session.preferred_date}}</p>
+<p><strong>Has Cost:</strong> {% if session.has_cost%} Yes {% else %} No {% endif %}</p>
+<p><strong>RSVP Required:</strong> {% if session.rsvp_required%} Yes {% else %} No {% endif %}</p>
+<p><strong>Expected Capacity:</strong> {% if session.expected_capacity == None%} Not Specified {% else %} {{ session.expected_capacity}} {% endif %}</p>
+<p><strong>Resource &amp; Space Needs:</strong> {% if session.resource_space_needs == None%} Not Specified {% else %} {{ session.resource_space_needs}} {% endif %}</p>
+
   <br><br>
   {% if user.is_authenticated %}
   {% if signed_up %}

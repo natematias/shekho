@@ -18,6 +18,10 @@ $(function() {
             <li><a href="/sessions/submit">Submit Session</a></li>
             <li class="active"><a href="/sessions/browse">Browse Sessions</a></li>
             <li><a href="http://festival-of-learning.media.mit.edu/">About</a></li>
+    {% if user.is_authenticated %}
+            <li><a href="/sessions/dashboard">My Sessions</a></li>
+    {% endif %}
+
 {% endblock %}
 
 
@@ -25,7 +29,7 @@ $(function() {
 {% autoescape off %}
 <div class="row">
  <div class="span16">
-  <h4>All session ideas</h4>
+  <h4>Session ideas</h4>
   <table class="condensed-table bordered-table zebra-striped">
     <thead>
           <tr>

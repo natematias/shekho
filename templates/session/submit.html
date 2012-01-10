@@ -7,6 +7,10 @@
             <li class="active"><a href="/sessions/submit">Submit Session</a></li>
             <li><a href="/sessions/browse">Browse Sessions</a></li>
             <li><a href="http://festival-of-learning.media.mit.edu/">About</a></li>
+    {% if user.is_authenticated %}
+            <li><a href="/sessions/dashboard">My Sessions</a></li>
+    {% endif %}
+
 {% endblock %}
 
 {% block scripts %}
@@ -29,10 +33,10 @@
 {% block banner %}
 {% if success %}
 {% else %}
-<div class="alert-message notice fade in" data-alert="alert">
+<!--<div class="alert-message notice fade in" data-alert="alert">
 <a class="close" href="#">&times;</a>
 <p><strong>Note:</strong> Submitting a session idea does not necessarily mean that you have to commit to conducting it. You can defer your decision till &lt;DATE&gt; </p>
-</div>
+</div>-->
 {% endif %}
 {% endblock %}
 
@@ -52,7 +56,22 @@
 </div>
  {% else %}
 
-  <h3>Submit a session idea</h3>
+  <h2>Submit a session idea</h2>
+
+  <p class="description">Enter session information. If you have any questions, contact us at <a href="mailto:festival-of-learning@media.mit.edu">festival-of-learning@media.mit.edu</a>.</p>
+
+<h3>Types of Sessions:</h3>
+<p class="description">This is a list of possible session types. This is not a complete list and if you think of something we haven’t thought of, please explain in your description.</p>
+
+<ul>
+  <li><strong>Discussions</strong>: An open format for conversation around a topic of your choosing.</li>
+<li><strong>Workshops</strong>: A classroom format to teach or facilitate a topic of your choosing.</li>
+<li><strong>Collaborative construction</strong>: Make something together with your entire session. </li>
+<li><strong>Tutoring sessions</strong>: Personal tutoring session with a few attendees.</li>
+<li><strong>Clinics</strong>: A kind of “office hours” where you help people develop their idea or project in an area of your choosing.</li>
+<li><strong>Play</strong>: Teach and learn through play.</li>
+</ul>
+
     <form method="POST" action="/sessions/submit" enctype="multipart/form-data" class="form-stacked">{% csrf_token %}
 
     {% if form.non_field_errors %}
@@ -63,6 +82,28 @@
     {% endif %}
 
      <fieldset>
+
+          {% if form.type.errors %}
+          <div class="clearfix error">
+          {% else %}
+          <div class="clearfix">
+          {% endif %}
+
+            <label for="id_type">Type</label>
+            <div class="input">
+              <input class="xlarge" id="id_type" name="type" size="30" type="text" placeholder="Type/format of your session">
+              {% if form.type.errors %}
+              <span class="help-block">
+              {{form.type.errors}}
+              </span>
+              {% else %}
+              <span class="help-block">
+              (e.g. tutorials, clinics, discussion circles, workshops, play, collaborative construction projects, etc)
+              </span>
+              {% endif %}
+            </div>
+          </div><!-- /clearfix -->
+
 
           {% if form.title.errors %}
           <div class="clearfix error">
@@ -100,27 +141,6 @@
             </div>
           </div>
 
-          {% if form.type.errors %}
-          <div class="clearfix error">
-          {% else %}
-          <div class="clearfix">
-          {% endif %}
-
-            <label for="id_type">Type</label>
-            <div class="input">
-              <input class="xlarge" id="id_type" name="type" size="30" type="text" placeholder="Type/format of your session">
-              {% if form.type.errors %}
-              <span class="help-block">
-              {{form.type.errors}}
-              </span>
-              {% else %}
-              <span class="help-block">
-              (e.g. one-on-one tutorials, clinics, discussion circles, workshops, playdates, games, collaborative construction projects, etc)
-              </span>
-              {% endif %}
-            </div>
-          </div><!-- /clearfix -->
-
           {% if form.duration.errors %}
           <div class="clearfix error">
           {% else %}
@@ -136,14 +156,131 @@
               </span>
               {% else %}
               <span class="help-block">
-              (e.g. 30 mins, 1 hour, 2 hours, all day)
+              (e.g. 30 mins, 1 hour, 2 hours, half day, all day)
               </span>
               {% endif %}
             </div>
           </div><!-- /clearfix -->
+
+<!-- Added by J. Nathan Matias -->
+          {% if form.rsvp_required.errors %}
+          <div class="clearfix error">
+          {% else %}
+          <div class="clearfix">
+          {% endif %}
+            <label for="id_rsvp_required" style="display:inline;">RSVP Required</label>
+            <div class="input" style="display:inline">
+              <input class="checkbox" id="id_rsvp_required" name="rsvp_required" size="30" type="checkbox" value="rsvp_required">
+              {% if form.rsvp_required.errors %}
+              <span class="help-block">
+              {{form.rsvp_required.errors}}
+              </span>
+              {% else %}
+              <span class="help-block">
+              (check this box if you require attendees to sign up by 19 January)
+              </span>
+              {% endif %}
+            </div>
+          </div><!-- /clearfix -->
+
+
+          {% if form.has_cost.errors %}
+          <div class="clearfix error">
+          {% else %}
+          <div class="clearfix">
+          {% endif %}            <label for="id_has_cost" style="display:inline;">Has Cost for Participants </label>
+            <div class="input" style="display:inline"><input class="checkbox" id="id_has_cost" name="has_cost" size="30" type="checkbox" value="has_cost">
+              {% if form.has_cost.errors %}
+              <span class="help-block">
+              {{form.has_cost.errors}}
+              </span>
+              {% else %}
+              <span class="help-block">
+              (if you check this box, please specify cost in the description)
+              </span>
+              {% endif %}
+            </div>
+          </div><!-- /clearfix -->
+
+
+          {% if form.preferred_date.errors %}
+          <div class="clearfix error">
+          {% else %}
+          <div class="clearfix">
+          {% endif %}
+
+            <label for="id_preferred_date">Preferred Date</label>
+            <div class="input">              <input class="xlarge" id="id_preferred_date" name="preferred_date" size="30" type="text"
+ placeholder="Preferred Date your session">
+              {% if form.preferred_date.errors %}
+              <span class="help-block">
+              {{form.preferred_date.errors}}
+              </span>
+              {% else %}
+              <span class="help-block">
+              (Leave blank unless you can only facilitate on a certain day or time)
+              </span>
+              {% endif %}
+            </div>
+          </div><!-- /clearfix -->
+
+
+          {% if form.expected_capacity.errors %}
+          <div class="clearfix error">
+          {% else %}
+          <div class="clearfix">
+          {% endif %}
+
+            <label for="id_expected_capacity">Expected Capacity</label>
+            <div class="input">              <input class="xlarge" id="id_expected_capacity" name="expected_capacity" size="30" type="text"
+ placeholder="Estimated capacity of your session">
+              {% if form.expected_capacity.errors %}
+              <span class="help-block">
+              {{form.expected_capacity.errors}}
+              </span>
+              {% else %}
+              <span class="help-block">
+              (three? twenty? a hundred?)
+              </span>
+              {% endif %}
+            </div>
+          </div><!-- /clearfix -->
+
+          {% if form.resource_space_needs.errors %}
+          <div class="clearfix error">
+          {% else %}
+          <div class="clearfix">
+          {% endif %}
+
+            <label for="id_resource_space_needs">Resource and Space needs</label>
+            <div class="input">              <input class="xlarge" id="id_resource_space_needs" name="resource_space_needs" size="30" type="text"
+ placeholder="Estimated resource and space needs of your session">
+              {% if form.resource_space_needs.errors %}
+              <span class="help-block">
+              {{form.resource_space_needs.errors}}
+              </span>
+              {% else %}
+              <span class="help-block">
+              (do you need a kitchen? A projector? Electricity? Tables and Chairs?)
+              </span>
+              {% endif %}
+            </div>
+          </div><!-- /clearfix -->
+
+
+
+
+<!-- End Added by J. nathan Matias-->
+
+
         
           <input type='hidden' name='facilitator' value='{{ user.id }}'> 
           <input type='hidden' name='status' value='unconfirmed'>
+
+<div class="alert-message error fade in" data-alert="alert">
+<a class="close" href="#">&times;</a>
+<p><strong>Note:</strong> Although administrators can edit submissions, session proposers cannot yet edit submissions (<em>we're working on it!</em>), so please double check your submissions before submitting.</p>
+</div>
 
           <div class="actions">
             <input type="submit" class="btn primary" value="Submit">&nbsp;<button type="reset" class="btn">Cancel</button>
@@ -161,10 +298,6 @@
 {% else %}
 <div class="row">
 <div class="span15">
-<div class="alert-message error fade in" data-alert="alert">
-<a class="close" href="#">&times;</a>
-<p><strong>Note:</strong> We have not implemented editing of submissions yet (<em>WIP</em>), so please double check your submissions before hitting the submit button.</p>
-</div>
 </div>
 </div>
 {% endif %}
