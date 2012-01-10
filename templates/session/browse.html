@@ -47,7 +47,7 @@ $(function() {
         <td>{{ session.description }}</td>
         <td>{% if session.has_cost %}<span class="label info">&nbsp;$$&nbsp;</span>
             {% else %} &nbsp; {% endif %}</td>
-        <td>{% if session.confirmed %}<span class="label info">RSVP</span>
+        <td>{% if session.rsvp_required %}<span class="label info">RSVP</span>
             {% else %} &nbsp; {% endif %}</td>
         <td>{% if session.confirmed %}<span class="label success">Confirmed</span>
             {% else %} &nbsp; {% endif %}</td>
